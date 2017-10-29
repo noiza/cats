@@ -1,0 +1,53 @@
+#main-carousel-container{
+	display: table;
+  border-collapse:collapse;
+	font-family: 'Open Sans Condensed', sans-serif;
+
+	.static-block{
+		display: none;
+	  position: absolute;
+	  bottom: 0;
+	  width: 100%;
+		background: rgba(0, 0, 0, 0.4);
+		color: #fff;
+		z-index: 1;
+		padding-left: 20px;
+		padding-bottom: 10px;
+
+		h2{
+			margin-top: 15px;
+		}
+	}
+
+	.carousel-wrap{
+		//float: left;
+		width: 272px;
+		display: table-cell;
+		border: 1px solid #eae4e4;
+		&:hover .static-block{
+			display: block;
+		}
+	}
+
+	.carousel-numbers{
+		text-align: center;
+		margin-bottom: 2px;
+		font-size: 16px;
+	}
+
+	.carousel-controls {
+		position: absolute;
+    right: 1px;
+    bottom: 1px;
+		padding-right: 20px;
+		padding-bottom: 20px;
+		a{
+			span{
+				background: #333;
+				color: #fff;
+				border-radius: 50%;
+    		padding: 5px;
+			}
+		}
+	}
+}
