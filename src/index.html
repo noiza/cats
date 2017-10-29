@@ -16,11 +16,13 @@
 				<div id="carousel{{carousel.carouselId}}" class="carousel slide" data-interval="false">
 					<div class="carousel-inner">
 						<div ng-repeat="slide in carousel.slides" class="{{slide.slideClass}}">
-							<img src="{{slide.slideImg}}">
+							<a href="#" data-toggle="modal" data-target=".carousel{{carousel.carouselId}}">
+								<img src="{{slide.slideImg}}">
+							</a>
 						</div>
 					</div>
 					<div class="static-block hidden-xs">
-						<h2>{{carousel.catName}}</h2>
+						<h2><a href="#" data-toggle="modal" data-target=".carousel{{carousel.carouselId}}" ng-click="setCurrentCat(carousel)">{{carousel.catName}}</a></h2>
 						<h4>{{carousel.catAge}}</h4>
 						<div class="carousel-controls">
 							<p class="carousel-numbers">{{carousel.list_slideIndex}} of {{carousel.list_quantitySlides}}</p>
@@ -32,10 +34,33 @@
 							</a>
 						</div>
 					</div>
+					<div class="modal fade carousel{{carousel.carouselId}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="row">
+									<div class="col-md-11">
+										<div class="col-md-7">
+											<div ng-repeat="slide in carousels[currentCat].slides" class="{{slide.slideClass}}">
+												<img src="{{slide.slideImg}}">
+											</div>
+										</div>
+										<div class="col-md-5">
+											<h3 class="">{{carousels[currentCat].catName}}</h3>
+											<h3 class="">{{carousels[currentCat].catAge}}</h3>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="right-arrow">
+								<a href="#" ng-click="nextCat(carousel)"><span class="glyphicon glyphicon-chevron-right"></span></a>
+							</div>
+						</div>
+					</div>
 				</div>
 	    </div>
 		</div>
 	</div>
+
 </body>
 </html>
 
@@ -48,19 +73,22 @@
 	var app = angular.module('myApp', []);
 	app.controller('myCtrl', function($scope) {
 			$scope.carousels = [
+				{list_quantitySlides: 2, list_slideIndex: 1, carouselId: 0, catName: 'Sam', catAge: '7 years',
+					slides: [
+						{slideName: '', slideImg: 'assets/cat_fish_0.png', slideClass: 'item active'},
+						{slideName: '', slideImg: 'assets/cat_hiss_0.png', slideClass: 'item'}
+				]},
 				{list_quantitySlides: 3, list_slideIndex: 1, carouselId: 1, catName: 'Max', catAge: '3 years',
 					slides: [
 						{slideName: 'First slide', slideImg: 'assets/cat_rascal_2.png', slideClass: 'item active'},
 						{slideName: 'Second slide', slideImg: 'assets/cat_eyes_2.png', slideClass: 'item'},
 						{slideName: 'Third slide', slideImg: 'assets/cat_lady_2.png', slideClass: 'item'}
 				]},
-
 				{list_quantitySlides: 2, list_slideIndex: 1, carouselId: 2, catName: 'Tiger', catAge: '5 years',
 					slides: [
 						{slideName: 'First slide', slideImg: 'assets/cat_food_1.png', slideClass: 'item active'},
 						{slideName: 'Second slide', slideImg: 'assets/cat_fat_1.png', slideClass: 'item'}
 				]},
-
 				{list_quantitySlides: 4, list_slideIndex: 1, carouselId: 3, catName: 'Oscar', catAge: '10 years',
 					slides: [
 						{slideName: '', slideImg: 'assets/cat_box_3.png', slideClass: 'item active'},
@@ -68,12 +96,12 @@
 						{slideName: '', slideImg: 'assets/cat_paper_3.png', slideClass: 'item'},
 						{slideName: '', slideImg: 'assets/cat_banjo_3.png', slideClass: 'item'}
 				]},
-
 				{list_quantitySlides: 1, list_slideIndex: 1, carouselId: 4, catName: 'Kitty', catAge: '1 year',
 					slides: [
 						{slideName: 'First slide', slideImg: 'assets/cat_drunk_4.png', slideClass: 'item active'}
 				]},
 			];
+			$scope.currentCat = 0;
 			$scope.prevSlider = function(item){
 				item.list_slideIndex--;
  				if (item.list_slideIndex == 0) {
@@ -86,5 +114,16 @@
  					item.list_slideIndex = 1;
  				}
 		  };
+			$scope.setCurrentCat = function(item) {
+				$scope.currentCat = item.carouselId;
+			};
+			$scope.nextCat = function(item) {
+				// currentCat = item.carouselId + 1;
+				//$scope.setCurrentCat(item);
+				$scope.currentCat = $scope.currentCat + 1;
+				//alert($scope.currentCat);
+				//carousels[nextCat];
+				// currentCat =
+			}
 	});
 </script>

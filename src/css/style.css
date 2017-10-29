@@ -14,6 +14,8 @@
     padding-bottom: 10px; }
     #main-carousel-container .static-block h2 {
       margin-top: 15px; }
+      #main-carousel-container .static-block h2 a {
+        color: #fff; }
   #main-carousel-container .carousel-wrap {
     width: 272px;
     display: table-cell;
@@ -35,3 +37,14 @@
       color: #fff;
       border-radius: 50%;
       padding: 5px; }
+  #main-carousel-container .right-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-right: -50px; }
+    #main-carousel-container .right-arrow a span {
+      background: #000;
+      color: #fff;
+      border-radius: 50%;
+      padding: 5px;
+      font-size: 20px; }

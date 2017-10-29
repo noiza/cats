@@ -16,6 +16,9 @@
 
 		h2{
 			margin-top: 15px;
+			a{
+				color: #fff;
+			}
 		}
 	}
 
@@ -47,6 +50,22 @@
 				color: #fff;
 				border-radius: 50%;
     		padding: 5px;
+			}
+		}
+	}
+
+	.right-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+		margin-right: -50px;
+		a{
+			span{
+				background: #000;
+				color: #fff;
+				border-radius: 50%;
+    		padding: 5px;
+				font-size: 20px;
 			}
 		}
 	}
