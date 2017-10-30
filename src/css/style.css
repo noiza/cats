@@ -42,7 +42,8 @@
     margin-top: 60px; }
   #main-carousel-container .cat-imgs {
     max-height: 115px;
-    overflow: auto; }
+    overflow: auto;
+    margin-right: 1px; }
     #main-carousel-container .cat-imgs a {
       display: inline-block;
       padding: 1px; }
@@ -77,3 +78,7 @@
       border-radius: 50%;
       padding: 5px;
       font-size: 20px; }
+
+.modal-backdrop {
+  background-color: #0079bf;
+  opacity: 0.8 !important; }

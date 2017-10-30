@@ -61,6 +61,7 @@
 	.cat-imgs{
 		max-height: 115px;
 		overflow:auto;
+		margin-right: 1px;
 		a{
 			display: inline-block;
 			padding: 1px;
@@ -111,4 +112,9 @@
 			}
 		}
 	}
+}
+
+.modal-backdrop {
+   background-color: rgb(0, 121, 191);
+	 opacity: 0.8 !important;
 }
