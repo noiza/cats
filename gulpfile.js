@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
-		browserSync = require('browser-sync').create();
+		browserSync = require('browser-sync').create(),
+		concat = require('gulp-concat'),
+		uglify = require('gulp-uglifyjs');
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function() {
@@ -10,12 +12,23 @@ gulp.task('sass', function() {
 	.pipe(browserSync.stream());
 });
 
+gulp.task('fonts', function() {
+	return gulp.src('src/bower_components/bootstrap/fonts/*')
+	.pipe(gulp.dest('src/fonts'));
+});
+
 // Move the js files into our src/js folder
-// gulp.task('js', function() {
-// 	return gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min.js', 'node_modules/jquery/dist/jquery.min.js', 'node_modules/popper.js/dist/umd/popper.min.js'])
-// 	.pipe(gulp.dest("src/js"))
-// 	.pipe(browserSync.stream());
-// });
+gulp.task('js', function() {
+return gulp.src([
+		'src/bower_components/jquery/dist/jquery.min.js',
+		'src/bower_components/angular/angular.min.js',
+		'src/bower_components/bootstrap/dist/js/bootstrap.min.js',
+		'src/js/common.js'
+	])
+	.pipe(concat('script.min.js')) //concat() - объединение файлов
+	.pipe(uglify()) //uglify() - сжатие файлов
+	.pipe(gulp.dest('src/js'));
+});
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
@@ -29,4 +42,4 @@ gulp.task('serve', ['sass'], function() {
 });
 
 //gulp.task('default', ['js', 'serve']);
-gulp.task('default', ['serve']);
+gulp.task('default', ['fonts', 'serve']);
