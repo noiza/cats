@@ -37,7 +37,7 @@
 					<div class="modal fade carousel{{carousel.carouselId}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 						<div class="modal-dialog " role="document">
 							<div class="left-arrow">
-								<a href="#" ng-click="prevCat(carousel)"><span class="glyphicon glyphicon-chevron-left"></span></a>
+								<a href="" ng-click="prevCat()"><span class="glyphicon glyphicon-chevron-left"></span></a>
 							</div>
 							<div class="modal-content">
 								<div class="row">
@@ -54,12 +54,12 @@
 											</div>
 											<div class="row cat-imgs">
 												<div class="col-md-4">
-													<a href="#" class="cat-img-preview active" ng-click="selectCatImg(carousels[currentCat].slides[0])">
+													<a href="" class="cat-img-preview" ng-class="class" ng-click="selectCatImg($event, carousels[currentCat].slides[0])">
 														<img src="{{carousels[currentCat].slides[0].slideImg}}" class="img-responsive">
 													</a>
 												</div>
 												<div ng-repeat="slide in carousels[currentCat].slides.slice(1, carousels[currentCat].slides.length)" class="col-md-4">
-													<a href="#" class="cat-img-preview" ng-click="selectCatImg(slide)">
+													<a href="" class="cat-img-preview" ng-click="selectCatImg($event, slide)">
 														<img src="{{slide.slideImg}}" class="img-responsive">
 													</a>
 												</div>
@@ -69,7 +69,7 @@
 								</div>
 							</div>
 							<div class="right-arrow">
-								<a href="#" ng-click="nextCat(carousel)"><span class="glyphicon glyphicon-chevron-right"></span></a>
+								<a href="" ng-click="nextCat()"><span class="glyphicon glyphicon-chevron-right"></span></a>
 							</div>
 						</div>
 					</div>
@@ -124,6 +124,8 @@
 			];
 			$scope.currentCat = 0;
 			$scope.currentCatImg = '';
+			$scope.class = "active";
+
 			$scope.prevSlider = function(item){
 				item.list_slideIndex--;
  				if (item.list_slideIndex == 0)
@@ -138,18 +140,27 @@
 				$scope.currentCat = item.carouselId;
 				$scope.currentCatImg = item.slides[0].slideImg;
 			};
-			$scope.nextCat = function(item) {
+			$scope.nextCat = function() {
 				$scope.currentCat = $scope.currentCat + 1;
-				if ($scope.currentCat == $scope.carousels.length)
+				if ($scope.currentCat == $scope.carousels.length) {
 					$scope.currentCat = 0;
+				}
+				$scope.currentCatImg = $scope.carousels[$scope.currentCat].slides[0].slideImg;
+				$scope.class = "active";
 			}
-			$scope.prevCat = function(item) {
+			$scope.prevCat = function() {
 				$scope.currentCat = $scope.currentCat - 1;
-				if ($scope.currentCat == 0)
+				if ($scope.currentCat < 0) {
 					$scope.currentCat = $scope.carousels.length - 1;
+				}
+				$scope.currentCatImg = $scope.carousels[$scope.currentCat].slides[0].slideImg;
+				$scope.class = "active";
 			}
-			$scope.selectCatImg = function(item) {
+			$scope.selectCatImg = function(event, item) {
+				$scope.class = "";
 				$scope.currentCatImg = item.slideImg;
+				$('.cat-imgs a.cat-img-preview.active').removeClass('active');
+				$(event.target).parent().addClass('active');
 			}
 	});
 </script>
