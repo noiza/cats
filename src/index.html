@@ -16,7 +16,7 @@
 				<div id="carousel{{carousel.carouselId}}" class="carousel slide" data-interval="false">
 					<div class="carousel-inner">
 						<div ng-repeat="slide in carousel.slides" class="{{slide.slideClass}}">
-							<a href="#" data-toggle="modal" data-target=".carousel{{carousel.carouselId}}">
+							<a href="#" data-toggle="modal" data-target=".carousel{{carousel.carouselId}}" ng-click="setCurrentCat(carousel)">
 								<img src="{{slide.slideImg}}">
 							</a>
 						</div>
@@ -35,18 +35,35 @@
 						</div>
 					</div>
 					<div class="modal fade carousel{{carousel.carouselId}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-						<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-dialog " role="document">
+							<div class="left-arrow">
+								<a href="#" ng-click="prevCat(carousel)"><span class="glyphicon glyphicon-chevron-left"></span></a>
+							</div>
 							<div class="modal-content">
 								<div class="row">
 									<div class="col-md-11">
 										<div class="col-md-7">
-											<div ng-repeat="slide in carousels[currentCat].slides" class="{{slide.slideClass}}">
-												<img src="{{slide.slideImg}}">
-											</div>
+											<img src="{{currentCatImg}}">
 										</div>
 										<div class="col-md-5">
-											<h3 class="">{{carousels[currentCat].catName}}</h3>
-											<h3 class="">{{carousels[currentCat].catAge}}</h3>
+											<div class="cat-info">
+												<h3 class="">{{carousels[currentCat].catName}}</h3>
+												<div class="row"><div class="col-md-5">race:</div><div class="col-md-7">{{carousels[currentCat].catAge}}</div></div>
+												<div class="row"><div class="col-md-5">age:</div><div class="col-md-7">{{carousels[currentCat].catAge}}</div></div>
+												<div class="row"><div class="col-md-5">weight:</div><div class="col-md-7">{{carousels[currentCat].catAge}}</div></div>
+											</div>
+											<div class="row cat-imgs">
+												<div class="col-md-4">
+													<a href="#" class="cat-img-preview active" ng-click="selectCatImg(carousels[currentCat].slides[0])">
+														<img src="{{carousels[currentCat].slides[0].slideImg}}" class="img-responsive">
+													</a>
+												</div>
+												<div ng-repeat="slide in carousels[currentCat].slides.slice(1, carousels[currentCat].slides.length)" class="col-md-4">
+													<a href="#" class="cat-img-preview" ng-click="selectCatImg(slide)">
+														<img src="{{slide.slideImg}}" class="img-responsive">
+													</a>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -94,6 +111,10 @@
 						{slideName: '', slideImg: 'assets/cat_box_3.png', slideClass: 'item active'},
 						{slideName: '', slideImg: 'assets/cat_sleep_3.png', slideClass: 'item'},
 						{slideName: '', slideImg: 'assets/cat_paper_3.png', slideClass: 'item'},
+						{slideName: '', slideImg: 'assets/cat_banjo_3.png', slideClass: 'item'},
+						{slideName: '', slideImg: 'assets/cat_box_3.png', slideClass: 'item'},
+						{slideName: '', slideImg: 'assets/cat_sleep_3.png', slideClass: 'item'},
+						{slideName: '', slideImg: 'assets/cat_paper_3.png', slideClass: 'item'},
 						{slideName: '', slideImg: 'assets/cat_banjo_3.png', slideClass: 'item'}
 				]},
 				{list_quantitySlides: 1, list_slideIndex: 1, carouselId: 4, catName: 'Kitty', catAge: '1 year',
@@ -102,28 +123,33 @@
 				]},
 			];
 			$scope.currentCat = 0;
+			$scope.currentCatImg = '';
 			$scope.prevSlider = function(item){
 				item.list_slideIndex--;
- 				if (item.list_slideIndex == 0) {
+ 				if (item.list_slideIndex == 0)
  					item.list_slideIndex = item.list_quantitySlides;
- 				}
 		  };
 		  $scope.nextSlider = function(item){
 				item.list_slideIndex++;
- 				if (item.list_slideIndex > item.list_quantitySlides) {
+ 				if (item.list_slideIndex > item.list_quantitySlides)
  					item.list_slideIndex = 1;
- 				}
 		  };
 			$scope.setCurrentCat = function(item) {
 				$scope.currentCat = item.carouselId;
+				$scope.currentCatImg = item.slides[0].slideImg;
 			};
 			$scope.nextCat = function(item) {
-				// currentCat = item.carouselId + 1;
-				//$scope.setCurrentCat(item);
 				$scope.currentCat = $scope.currentCat + 1;
-				//alert($scope.currentCat);
-				//carousels[nextCat];
-				// currentCat =
+				if ($scope.currentCat == $scope.carousels.length)
+					$scope.currentCat = 0;
+			}
+			$scope.prevCat = function(item) {
+				$scope.currentCat = $scope.currentCat - 1;
+				if ($scope.currentCat == 0)
+					$scope.currentCat = $scope.carousels.length - 1;
+			}
+			$scope.selectCatImg = function(item) {
+				$scope.currentCatImg = item.slideImg;
 			}
 	});
 </script>
